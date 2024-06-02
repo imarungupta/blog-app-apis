@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,7 +22,10 @@ public class UserController {
 
     @Autowired
     private  UserService userService;
+
+    // ADMIN -CREATE USER
     // POST Users
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/")
     public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto){
         UserDto createUserDto = this.userService.createUser(userDto);
@@ -34,7 +38,8 @@ public class UserController {
         UserDto updateUserDto = this.userService.updateUser(userDto, userId);
         return new ResponseEntity<>(updateUserDto, HttpStatus.OK);
     }
-    //Delete User
+    //ADMIN -Delete User
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{userId}")
     public ResponseEntity<ApiResponse> deleteUser(@PathVariable Integer userId){
         this.userService.deleteUser(userId);

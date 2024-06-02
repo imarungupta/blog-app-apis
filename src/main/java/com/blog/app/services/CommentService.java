@@ -5,7 +5,7 @@ import com.blog.app.payloads.CommentDto;
 public interface CommentService {
 
     // create
-    CommentDto createComment(CommentDto commentDto);
+    CommentDto createComment(CommentDto commentDto, Integer postId);
 
     // update
     CommentDto updateComment(CommentDto commentDto, Integer commentId);

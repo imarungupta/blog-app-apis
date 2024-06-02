@@ -41,5 +41,9 @@ public class Post {
     @ManyToOne
     private User user;
 
+     // Since a post can have many comments
+   @OneToMany(mappedBy = "post",cascade = CascadeType.ALL)
+    private Set<Comment> commentSet = new HashSet<>();
+
 
 }

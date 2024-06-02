@@ -16,6 +16,7 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    // Resource Not Found Exception like userid , postId etc
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ApiResponse> handleResourceNotFoundException(ResourceNotFoundException ex){
         String expMessage = ex.getMessage();
@@ -24,6 +25,15 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(apiResponse, HttpStatus.NOT_FOUND);
 
     }
+    // General message for any API exception
+    @ExceptionHandler(APIException.class)
+    public ResponseEntity<ApiResponse> handleAPIException(APIException ex){
+        String getApiExpMessage= ex.getMessage();
+        // send the message
+        ApiResponse apiResponse= new ApiResponse(getApiExpMessage, true);
+        return new ResponseEntity<ApiResponse>( apiResponse, HttpStatus.BAD_REQUEST);
+    }
+    // Exception handing for entities
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String,String>> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex){
 
