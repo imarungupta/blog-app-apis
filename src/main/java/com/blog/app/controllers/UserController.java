@@ -5,6 +5,8 @@ import com.blog.app.payloads.UserDto;
 import com.blog.app.services.UserService;
 
 
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+//@SecurityRequirement(name = "auth") // This is for JTW auth at Swagger Ui
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/users")
@@ -32,6 +35,7 @@ public class UserController {
         return new ResponseEntity<>(createUserDto, HttpStatus.CREATED);
     }
     // Update user
+    //@Hidden    // This is from swagger api is used when we want to hide paricular operation then will hise @Hdden
     @PutMapping("/{userId}")
     public ResponseEntity<UserDto> updateUser(@Valid @RequestBody UserDto userDto, @PathVariable Integer userId){
 
@@ -39,6 +43,7 @@ public class UserController {
         return new ResponseEntity<>(updateUserDto, HttpStatus.OK);
     }
     //ADMIN -Delete User
+   // @Hidden  // This is from swagger api is used when we want to hide paricular operation then will hise @Hdden
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{userId}")
     public ResponseEntity<ApiResponse> deleteUser(@PathVariable Integer userId){
